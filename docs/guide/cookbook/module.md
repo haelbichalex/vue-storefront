@@ -25,7 +25,7 @@ If you want to know the detailed difference of _Manual_ method and _CLI_ method,
 :::
 
 ### 1. Preparation
-- You need [**Vue Storefront**](https://github.com/DivanteLtd/vue-storefront) instance [installed along with other infrastructure ](setup.html#_1-install-with-docker) on your machine to build a new module and test it working. 
+- You need [**Vue Storefront**](https://github.com/vuestorefront/vue-storefront) instance [installed along with other infrastructure ](setup.html#_1-install-with-docker) on your machine to build a new module and test it working. 
 - You need a development editor of your choice for your own convenience.
 - You need _Vue Storefront_ [`CLI`](https://www.npmjs.com/package/@vue-storefront/cli) [installed](setup.html#_4-storefront-cli-at-your-service) on your machine for [Recipe B](#_2-2-recipe-b-cli-bootstrapping) installing with `CLI`. 
 
@@ -573,27 +573,27 @@ app_1  | This is one way to use moduleConfig
 
 ### 2-7. Recipe G (Setting up server module)
 
-We strongly recommend using kind of HTTP server as a proxy in front of Vue Storefront. Let it be `nginx` (suggested in our [production setup docs](https://docs.vuestorefront.io/guide/installation/production-setup.html)) or `Varnish` or even `Apache`. Any of those HTTP servers allows you to add some authorization or redirects layer before Vue Storefront.
+We strongly recommend using kind of HTTP server as a proxy in front of Vue Storefront. Let it be `nginx` (suggested in our [production setup docs](/guide/installation/production-setup.html)) or `Varnish` or even `Apache`. Any of those HTTP servers allows you to add some authorization or redirects layer before Vue Storefront.
 
 This is a recommended way.
 
 #### 1. Advanced Output Processing
 
-However, by using [advanced output processing](https://docs.vuestorefront.io/guide/core-themes/layouts.html#how-it-works) you can easily generate any text data output from your Vue Storefront site you want. Including JSON, XML and others. It's a way to generate sitemaps and other data based documents.
+However, by using [advanced output processing](/guide/core-themes/layouts.html#how-it-works) you can easily generate any text data output from your Vue Storefront site you want. Including JSON, XML and others. It's a way to generate sitemaps and other data based documents.
 
 #### 2. `Express.js` middleware
 
-The other option is to create a `Express.js` middleware. Our `core/scripts/server.ts` is a classical Node.js application so it should be easy. To do so you might want to create a [server module](https://github.com/DivanteLtd/vue-storefront/blob/develop/src/modules/compress/server.ts).
+The other option is to create a `Express.js` middleware. Our `core/scripts/server.ts` is a classical Node.js application so it should be easy. To do so you might want to create a [server module](https://github.com/vuestorefront/vue-storefront/blob/develop/src/modules/compress/server.ts).
 
 Server modules are located in `src/modules` and always have the `server.ts` entry point which responds to one of the few server entry points:
 
-- `afterProcessStarted` - executed just [after the server started](https://github.com/DivanteLtd/vue-storefront/blob/2c6e0e1c8e73952beabf550fe4530344a6bcce15/core/scripts/server.ts#L13).
-- `afterApplicationInitialized` - executed just [after Express app got initialized](https://github.com/DivanteLtd/vue-storefront/blob/2c6e0e1c8e73952beabf550fe4530344a6bcce15/core/scripts/server.ts#L34). It's a good entry point to bind new request handlers (`app.get(...)`, `app.use(...)`). Read more on [Express.js request handlers and routing](https://expressjs.com/en/guide/routing.html).
-- `beforeOutputRenderedResponse` - executed [after the SSR rendering has been done](https://github.com/DivanteLtd/vue-storefront/blob/2c6e0e1c8e73952beabf550fe4530344a6bcce15/core/scripts/server.ts#L189) but before sending it out to the browser; It lets you override the rendered SSR content with your own.
-- `afterOutputRenderedResponse` - executed [after advanced output processing pipeline](https://github.com/DivanteLtd/vue-storefront/blob/2c6e0e1c8e73952beabf550fe4530344a6bcce15/core/scripts/server.ts#L212) executed.
-- `beforeCacheInvalidated`, `afterCacheInvalidated` - executed [before and after cache has been invalidated](https://github.com/DivanteLtd/vue-storefront/blob/2c6e0e1c8e73952beabf550fe4530344a6bcce15/core/scripts/server.ts#L76)
+- `afterProcessStarted` - executed just [after the server started](https://github.com/vuestorefront/vue-storefront/blob/2c6e0e1c8e73952beabf550fe4530344a6bcce15/core/scripts/server.ts#L13).
+- `afterApplicationInitialized` - executed just [after Express app got initialized](https://github.com/vuestorefront/vue-storefront/blob/2c6e0e1c8e73952beabf550fe4530344a6bcce15/core/scripts/server.ts#L34). It's a good entry point to bind new request handlers (`app.get(...)`, `app.use(...)`). Read more on [Express.js request handlers and routing](https://expressjs.com/en/guide/routing.html).
+- `beforeOutputRenderedResponse` - executed [after the SSR rendering has been done](https://github.com/vuestorefront/vue-storefront/blob/2c6e0e1c8e73952beabf550fe4530344a6bcce15/core/scripts/server.ts#L189) but before sending it out to the browser; It lets you override the rendered SSR content with your own.
+- `afterOutputRenderedResponse` - executed [after advanced output processing pipeline](https://github.com/vuestorefront/vue-storefront/blob/2c6e0e1c8e73952beabf550fe4530344a6bcce15/core/scripts/server.ts#L212) executed.
+- `beforeCacheInvalidated`, `afterCacheInvalidated` - executed [before and after cache has been invalidated](https://github.com/vuestorefront/vue-storefront/blob/2c6e0e1c8e73952beabf550fe4530344a6bcce15/core/scripts/server.ts#L76)
 
-Here is an [example how to bind](https://github.com/DivanteLtd/vue-storefront/blob/develop/src/modules/google-cloud-trace/server.ts) tracing module just after server process started:
+Here is an [example how to bind](https://github.com/vuestorefront/vue-storefront/blob/develop/src/modules/google-cloud-trace/server.ts) tracing module just after server process started:
 
 ```js
 import { serverHooks } from '@vue-storefront/core/server/hooks'
@@ -606,7 +606,7 @@ serverHooks.afterProcessStarted((config) => {
 })
 ```
 
-[Another example](https://github.com/DivanteLtd/vue-storefront/blob/develop/src/modules/compress/server.ts) - pretty common case - binding new Express middleware to process all user requests BEFORE they're processed by SSR rendering pipeline (including custom URL addresses):
+[Another example](https://github.com/vuestorefront/vue-storefront/blob/develop/src/modules/compress/server.ts) - pretty common case - binding new Express middleware to process all user requests BEFORE they're processed by SSR rendering pipeline (including custom URL addresses):
 
 ```js
 import { serverHooks } from '@vue-storefront/core/server/hooks'
@@ -744,7 +744,7 @@ It's hands down no-brainer to bootstrap a module _manually_ because the skeleton
 
 ## 6. Extend Elasticsearch request body using `storefront-query-builder`
 
-If you're using the new [`storefront-query-builder`](https://github.com/DivanteLtd/storefront-query-builder) and the `api-search-query` search-adapter ([introduced with v1.1.12](/guide/upgrade-notes/#_1-11-1-12)) it is now possible to extend it by new filters, or even overwrite a existing filter, to customize your Elasticsearch request-bodies.
+If you're using the new [`storefront-query-builder`](https://github.com/vuestorefront/storefront-query-builder) and the `api-search-query` search-adapter ([introduced with v1.1.12](/guide/upgrade-notes/#_1-11-1-12)) it is now possible to extend it by new filters, or even overwrite a existing filter, to customize your Elasticsearch request-bodies.
 
 So, this way you can add custom Elasticsearch queries to the query-chain and still use the notation of `SearchQuery` in the Vue Storefront.
 
@@ -831,3 +831,29 @@ Inside `check` we tell the filter to just be applied if the attribute is named e
 Inside `filter` we extend the Elasticsearch query-chain by our desired filters, using the `bodybuilder` library syntax.
 
 That's it, now we are able to filter by a complex query in only one line inside VSF.
+
+## 7. Working with translations in module
+
+Translations are provided in `core/i18n/resource/i18n/{your-locale}.csv` file and can be extended or overridden in `src/modules/{my-module}/resource/i18n/{your-locale}.csv` accordingly, but translations from `src/themes/{my-theme}/resource/i18n` have a bigger priority than translations from `src/module/{my-module}/resource/i18n`.
+
+### Example
+
+Here's an example of `en-US.csv` for `en-US` locale:
+
+```csv
+"customMessage","Here is the core message that can be overwritten in the module"
+```
+
+When you create the `en-US.csv` file within your `src/modules/{my-module}/resource/i18n/` folder and override some messages like:
+
+```csv
+"customMessage","You can define or override translation messages here."
+```
+
+... you may expect that `$t('customMessage')` will return `You can define or override translation messages here.` instead of `Here is the core message. that can be overwritten in the module`.
+
+## 8. Tests in module
+
+Our jest config allows you to write tests for each module which you have created.
+
+To create a test, you have to create a file inside `src/modules/{my-module}/test/unit/`. The file has to end with `.spec.ts` or `.spec.js`. Generally, it has to match this pattern: `src/modules/{my-module}/test/unit/{my-test}.spec.(js|ts)`.

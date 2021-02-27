@@ -6,11 +6,13 @@ The easiest way to create your own theme is to create a copy from one of our off
 
 ### Use vsf-cli
 
-If you have already setup vsf and you just want to install theme, then you can use [vsf-cli](https://www.npmjs.com/package/%40vue-storefront/cli). First install vsf-cli:
+If you have already setup VSF and you just want to install the theme, then you can use [vsf-cli](https://www.npmjs.com/package/%40vue-storefront/cli). First install vsf-cli:
 
 ```
-// min version 0.2.0
-npm i -g @vue-storefront/cli
+// You have to us 0.2.1 version of VSF CLI for VSF1
+npm i -g @vue-storefront/cli@0.2.1
+// or via yarn
+yarn global add @vue-storefront/cli@0.2.1
 ```
 
 Then run command in your project directory:
@@ -49,5 +51,5 @@ After official theme installation, you need to copy it and place it in `src/them
 and run `yarn` to make [Lerna](https://github.com/lerna/lerna) linking (which we use for monorepos).
 
 ## Our official themes:
-- [Capybara](https://github.com/DivanteLtd/vsf-capybara)
-- [Default](https://github.com/DivanteLtd/vsf-default)
+- [Capybara](https://github.com/vuestorefront/vsf-capybara)
+- [Default](https://github.com/vuestorefront/vsf-default)
